@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { applications, contactCards, techCards } from "./data";
 
 // Custom Hook for Intersection Observer
 const useIntersectionObserver = (options = {}) => {
@@ -187,399 +188,399 @@ const AnimatedLogo = () => (
 );
 
 // Particles Animation Component
-const ParticlesCanvas = () => {
-  const canvasRef = useRef();
+// const ParticlesCanvas = () => {
+//   const canvasRef = useRef();
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    const particles = [];
-    const particleCount = 100;
+//   useEffect(() => {
+//     const canvas = canvasRef.current;
+//     const ctx = canvas.getContext("2d");
+//     const particles = [];
+//     const particleCount = 100;
 
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
+//     const resizeCanvas = () => {
+//       canvas.width = window.innerWidth;
+//       canvas.height = window.innerHeight;
+//     };
 
-    resizeCanvas();
+//     resizeCanvas();
 
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 3 + 1;
-        this.speedX = Math.random() * 2 - 1;
-        this.speedY = Math.random() * 2 - 1;
-        this.opacity = Math.random() * 0.5 + 0.2;
-      }
+//     class Particle {
+//       constructor() {
+//         this.x = Math.random() * canvas.width;
+//         this.y = Math.random() * canvas.height;
+//         this.size = Math.random() * 3 + 1;
+//         this.speedX = Math.random() * 2 - 1;
+//         this.speedY = Math.random() * 2 - 1;
+//         this.opacity = Math.random() * 0.5 + 0.2;
+//       }
 
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
+//       update() {
+//         this.x += this.speedX;
+//         this.y += this.speedY;
 
-        if (this.x > canvas.width) this.x = 0;
-        if (this.x < 0) this.x = canvas.width;
-        if (this.y > canvas.height) this.y = 0;
-        if (this.y < 0) this.y = canvas.height;
-      }
+//         if (this.x > canvas.width) this.x = 0;
+//         if (this.x < 0) this.x = canvas.width;
+//         if (this.y > canvas.height) this.y = 0;
+//         if (this.y < 0) this.y = canvas.height;
+//       }
 
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0, 212, 255, ${this.opacity})`;
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = "#00D4FF";
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      }
-    }
+//       draw() {
+//         ctx.beginPath();
+//         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+//         ctx.fillStyle = `rgba(0, 212, 255, ${this.opacity})`;
+//         ctx.shadowBlur = 10;
+//         ctx.shadowColor = "#00D4FF";
+//         ctx.fill();
+//         ctx.shadowBlur = 0;
+//       }
+//     }
 
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
-    }
+//     for (let i = 0; i < particleCount; i++) {
+//       particles.push(new Particle());
+//     }
 
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+//     const animate = () => {
+//       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      particles.forEach((particle) => {
-        particle.update();
-        particle.draw();
-      });
+//       particles.forEach((particle) => {
+//         particle.update();
+//         particle.draw();
+//       });
 
-      particles.forEach((a, index) => {
-        particles.slice(index + 1).forEach((b) => {
-          const distance = Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
-          if (distance < 100) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(0, 212, 255, ${
-              0.1 * (1 - distance / 100)
-            })`;
-            ctx.lineWidth = 0.5;
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.stroke();
-          }
-        });
-      });
+//       particles.forEach((a, index) => {
+//         particles.slice(index + 1).forEach((b) => {
+//           const distance = Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+//           if (distance < 100) {
+//             ctx.beginPath();
+//             ctx.strokeStyle = `rgba(0, 212, 255, ${
+//               0.1 * (1 - distance / 100)
+//             })`;
+//             ctx.lineWidth = 0.5;
+//             ctx.moveTo(a.x, a.y);
+//             ctx.lineTo(b.x, b.y);
+//             ctx.stroke();
+//           }
+//         });
+//       });
 
-      requestAnimationFrame(animate);
-    };
+//       requestAnimationFrame(animate);
+//     };
 
-    animate();
+//     animate();
 
-    window.addEventListener("resize", resizeCanvas);
-    return () => window.removeEventListener("resize", resizeCanvas);
-  }, []);
+//     window.addEventListener("resize", resizeCanvas);
+//     return () => window.removeEventListener("resize", resizeCanvas);
+//   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="absolute top-0 left-0 w-full h-full z-10"
-    />
-  );
-};
+//   return (
+//     <canvas
+//       ref={canvasRef}
+//       className="absolute top-0 left-0 w-full h-full z-10"
+//     />
+//   );
+// };
 
 // Swarm Simulator Component
-const SwarmSimulator = () => {
-  const canvasRef = useRef();
-  const [droneCount, setDroneCount] = useState(200);
-  const [speed, setSpeed] = useState(1);
-  const [paused, setPaused] = useState(false);
-  const [currentShape, setCurrentShape] = useState("X");
-  const dronesRef = useRef([]);
-  const targetsRef = useRef([]);
+// const SwarmSimulator = () => {
+//   const canvasRef = useRef();
+//   const [droneCount, setDroneCount] = useState(200);
+//   const [speed, setSpeed] = useState(1);
+//   const [paused, setPaused] = useState(false);
+//   const [currentShape, setCurrentShape] = useState("X");
+//   const dronesRef = useRef([]);
+//   const targetsRef = useRef([]);
 
-  const rand = (a, b) => Math.random() * (b - a) + a;
+//   const rand = (a, b) => Math.random() * (b - a) + a;
 
-  const shapes = {
-    X: (W, H) => {
-      const pts = [];
-      const m = Math.min(W, H) * 0.35;
-      const cx = W / 2,
-        cy = H / 2;
-      const step = 0.008;
-      for (let t = -1; t <= 1; t += step) {
-        pts.push({ x: cx + m * t, y: cy + m * t });
-        pts.push({ x: cx + m * t, y: cy - m * t });
-      }
-      return jitter(pts, 2);
-    },
-    Heart: (W, H) => {
-      const pts = [];
-      const s = Math.min(W, H) * 0.03;
-      const cx = W / 2,
-        cy = H / 2 - 10;
-      const step = 0.1;
-      for (let t = 0; t < Math.PI * 2; t += step) {
-        const x = 16 * Math.pow(Math.sin(t), 3);
-        const y =
-          13 * Math.cos(t) -
-          5 * Math.cos(2 * t) -
-          2 * Math.cos(3 * t) -
-          Math.cos(4 * t);
-        pts.push({ x: cx + x * s, y: cy - y * s });
-      }
-      return jitter(densify(pts, 2), 1.5);
-    },
-    Circle: (W, H) => {
-      const pts = [];
-      const r = Math.min(W, H) * 0.3;
-      const cx = W / 2,
-        cy = H / 2;
-      const step = (Math.PI * 2) / 200;
-      for (let a = 0; a < Math.PI * 2; a += step) {
-        pts.push({ x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) });
-      }
-      return jitter(pts, 1.5);
-    },
-    Wave: (W, H) => {
-      const pts = [];
-      const rows = 6,
-        cols = 40;
-      const w = W * 0.8,
-        h = Math.min(H * 0.6, 320);
-      const sx = (W - w) / 2,
-        sy = (H - h) / 2;
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          const x = sx + (c / (cols - 1)) * w;
-          const y =
-            sy +
-            (r / (rows - 1)) * h +
-            Math.sin((c / cols) * Math.PI * 2 + r * 0.6) * 15;
-          pts.push({ x, y });
-        }
-      }
-      return jitter(pts, 1);
-    },
-    LuminaX: (W, H) => {
-      const pts = [];
-      const cx = W / 2,
-        cy = H / 2;
+//   const shapes = {
+//     X: (W, H) => {
+//       const pts = [];
+//       const m = Math.min(W, H) * 0.35;
+//       const cx = W / 2,
+//         cy = H / 2;
+//       const step = 0.008;
+//       for (let t = -1; t <= 1; t += step) {
+//         pts.push({ x: cx + m * t, y: cy + m * t });
+//         pts.push({ x: cx + m * t, y: cy - m * t });
+//       }
+//       return jitter(pts, 2);
+//     },
+//     Heart: (W, H) => {
+//       const pts = [];
+//       const s = Math.min(W, H) * 0.03;
+//       const cx = W / 2,
+//         cy = H / 2 - 10;
+//       const step = 0.1;
+//       for (let t = 0; t < Math.PI * 2; t += step) {
+//         const x = 16 * Math.pow(Math.sin(t), 3);
+//         const y =
+//           13 * Math.cos(t) -
+//           5 * Math.cos(2 * t) -
+//           2 * Math.cos(3 * t) -
+//           Math.cos(4 * t);
+//         pts.push({ x: cx + x * s, y: cy - y * s });
+//       }
+//       return jitter(densify(pts, 2), 1.5);
+//     },
+//     Circle: (W, H) => {
+//       const pts = [];
+//       const r = Math.min(W, H) * 0.3;
+//       const cx = W / 2,
+//         cy = H / 2;
+//       const step = (Math.PI * 2) / 200;
+//       for (let a = 0; a < Math.PI * 2; a += step) {
+//         pts.push({ x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) });
+//       }
+//       return jitter(pts, 1.5);
+//     },
+//     Wave: (W, H) => {
+//       const pts = [];
+//       const rows = 6,
+//         cols = 40;
+//       const w = W * 0.8,
+//         h = Math.min(H * 0.6, 320);
+//       const sx = (W - w) / 2,
+//         sy = (H - h) / 2;
+//       for (let r = 0; r < rows; r++) {
+//         for (let c = 0; c < cols; c++) {
+//           const x = sx + (c / (cols - 1)) * w;
+//           const y =
+//             sy +
+//             (r / (rows - 1)) * h +
+//             Math.sin((c / cols) * Math.PI * 2 + r * 0.6) * 15;
+//           pts.push({ x, y });
+//         }
+//       }
+//       return jitter(pts, 1);
+//     },
+//     LuminaX: (W, H) => {
+//       const pts = [];
+//       const cx = W / 2,
+//         cy = H / 2;
 
-      for (let i = 0; i < 20; i++) {
-        pts.push({ x: cx - 120, y: cy - 40 + i * 4 });
-      }
-      for (let i = 0; i < 15; i++) {
-        pts.push({ x: cx - 120 + i * 3, y: cy + 40 });
-      }
+//       for (let i = 0; i < 20; i++) {
+//         pts.push({ x: cx - 120, y: cy - 40 + i * 4 });
+//       }
+//       for (let i = 0; i < 15; i++) {
+//         pts.push({ x: cx - 120 + i * 3, y: cy + 40 });
+//       }
 
-      for (let t = -1; t <= 1; t += 0.1) {
-        pts.push({ x: cx + 50 + t * 30, y: cy + t * 40 });
-        pts.push({ x: cx + 50 + t * 30, y: cy - t * 40 });
-      }
+//       for (let t = -1; t <= 1; t += 0.1) {
+//         pts.push({ x: cx + 50 + t * 30, y: cy + t * 40 });
+//         pts.push({ x: cx + 50 + t * 30, y: cy - t * 40 });
+//       }
 
-      return jitter(pts, 2);
-    },
-  };
+//       return jitter(pts, 2);
+//     },
+//   };
 
-  const densify = (pts, mult) => {
-    const o = [];
-    for (let i = 0; i < pts.length; i++) {
-      const a = pts[i],
-        b = pts[(i + 1) % pts.length];
-      o.push(a);
-      const k = Math.max(1, Math.floor(mult));
-      for (let j = 1; j <= k; j++) {
-        o.push({
-          x: a.x + ((b.x - a.x) * j) / (k + 1),
-          y: a.y + ((b.y - a.y) * j) / (k + 1),
-        });
-      }
-    }
-    return o;
-  };
+//   const densify = (pts, mult) => {
+//     const o = [];
+//     for (let i = 0; i < pts.length; i++) {
+//       const a = pts[i],
+//         b = pts[(i + 1) % pts.length];
+//       o.push(a);
+//       const k = Math.max(1, Math.floor(mult));
+//       for (let j = 1; j <= k; j++) {
+//         o.push({
+//           x: a.x + ((b.x - a.x) * j) / (k + 1),
+//           y: a.y + ((b.y - a.y) * j) / (k + 1),
+//         });
+//       }
+//     }
+//     return o;
+//   };
 
-  const jitter = (pts, amt) => {
-    return pts.map((p) => ({
-      x: p.x + rand(-amt, amt),
-      y: p.y + rand(-amt, amt),
-    }));
-  };
+//   const jitter = (pts, amt) => {
+//     return pts.map((p) => ({
+//       x: p.x + rand(-amt, amt),
+//       y: p.y + rand(-amt, amt),
+//     }));
+//   };
 
-  const initDrones = useCallback(
-    (W, H) => {
-      dronesRef.current = Array.from({ length: droneCount }, () => ({
-        x: rand(0, W),
-        y: rand(0, H),
-        vx: 0,
-        vy: 0,
-      }));
-      setTargets(W, H, currentShape);
-    },
-    [droneCount, currentShape]
-  );
+//   const initDrones = useCallback(
+//     (W, H) => {
+//       dronesRef.current = Array.from({ length: droneCount }, () => ({
+//         x: rand(0, W),
+//         y: rand(0, H),
+//         vx: 0,
+//         vy: 0,
+//       }));
+//       setTargets(W, H, currentShape);
+//     },
+//     [droneCount, currentShape]
+//   );
 
-  const setTargets = useCallback(
-    (W, H, shape) => {
-      const pts = shapes[shape](W, H);
-      targetsRef.current = Array.from(
-        { length: droneCount },
-        (_, i) => pts[i % pts.length]
-      );
-    },
-    [droneCount]
-  );
+//   const setTargets = useCallback(
+//     (W, H, shape) => {
+//       const pts = shapes[shape](W, H);
+//       targetsRef.current = Array.from(
+//         { length: droneCount },
+//         (_, i) => pts[i % pts.length]
+//       );
+//     },
+//     [droneCount]
+//   );
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    let W = canvas.clientWidth;
-    let H = canvas.clientHeight;
-    const DPR = window.devicePixelRatio || 1;
+//   useEffect(() => {
+//     const canvas = canvasRef.current;
+//     const ctx = canvas.getContext("2d");
+//     let W = canvas.clientWidth;
+//     let H = canvas.clientHeight;
+//     const DPR = window.devicePixelRatio || 1;
 
-    const resize = () => {
-      W = canvas.clientWidth;
-      H = canvas.clientHeight;
-      canvas.width = W * DPR;
-      canvas.height = H * DPR;
-      ctx.scale(DPR, DPR);
-      setTargets(W, H, currentShape);
-    };
+//     const resize = () => {
+//       W = canvas.clientWidth;
+//       H = canvas.clientHeight;
+//       canvas.width = W * DPR;
+//       canvas.height = H * DPR;
+//       ctx.scale(DPR, DPR);
+//       setTargets(W, H, currentShape);
+//     };
 
-    resize();
-    initDrones(W, H);
+//     resize();
+//     initDrones(W, H);
 
-    const animate = () => {
-      if (!paused) {
-        ctx.fillStyle = "rgba(5, 5, 16, 0.25)";
-        ctx.fillRect(0, 0, W, H);
+//     const animate = () => {
+//       if (!paused) {
+//         ctx.fillStyle = "rgba(5, 5, 16, 0.25)";
+//         ctx.fillRect(0, 0, W, H);
 
-        const accel = 0.06 * speed;
-        const damp = 0.92;
+//         const accel = 0.06 * speed;
+//         const damp = 0.92;
 
-        for (let i = 0; i < droneCount; i++) {
-          const d = dronesRef.current[i];
-          const t = targetsRef.current[i];
-          if (d && t) {
-            const ax = (t.x - d.x) * accel;
-            const ay = (t.y - d.y) * accel;
-            d.vx = (d.vx + ax) * damp;
-            d.vy = (d.vy + ay) * damp;
-            d.x += d.vx;
-            d.y += d.vy;
+//         for (let i = 0; i < droneCount; i++) {
+//           const d = dronesRef.current[i];
+//           const t = targetsRef.current[i];
+//           if (d && t) {
+//             const ax = (t.x - d.x) * accel;
+//             const ay = (t.y - d.y) * accel;
+//             d.vx = (d.vx + ax) * damp;
+//             d.vy = (d.vy + ay) * damp;
+//             d.x += d.vx;
+//             d.y += d.vy;
 
-            const g = ctx.createLinearGradient(
-              d.x - 8,
-              d.y - 8,
-              d.x + 8,
-              d.y + 8
-            );
-            g.addColorStop(0, "#6EC1FF");
-            g.addColorStop(0.5, "#8A5CFF");
-            g.addColorStop(1, "#FF3EA5");
+//             const g = ctx.createLinearGradient(
+//               d.x - 8,
+//               d.y - 8,
+//               d.x + 8,
+//               d.y + 8
+//             );
+//             g.addColorStop(0, "#6EC1FF");
+//             g.addColorStop(0.5, "#8A5CFF");
+//             g.addColorStop(1, "#FF3EA5");
 
-            ctx.beginPath();
-            ctx.arc(d.x, d.y, 2.5, 0, Math.PI * 2);
-            ctx.fillStyle = g;
-            ctx.shadowColor = "rgba(138, 92, 255, 0.7)";
-            ctx.shadowBlur = 12;
-            ctx.fill();
-          }
-        }
-      }
-      requestAnimationFrame(animate);
-    };
+//             ctx.beginPath();
+//             ctx.arc(d.x, d.y, 2.5, 0, Math.PI * 2);
+//             ctx.fillStyle = g;
+//             ctx.shadowColor = "rgba(138, 92, 255, 0.7)";
+//             ctx.shadowBlur = 12;
+//             ctx.fill();
+//           }
+//         }
+//       }
+//       requestAnimationFrame(animate);
+//     };
 
-    animate();
+//     animate();
 
-    window.addEventListener("resize", resize);
-    return () => window.removeEventListener("resize", resize);
-  }, [droneCount, speed, paused, currentShape, initDrones, setTargets]);
+//     window.addEventListener("resize", resize);
+//     return () => window.removeEventListener("resize", resize);
+//   }, [droneCount, speed, paused, currentShape, initDrones, setTargets]);
 
-  const toolDefs = [
-    { id: "X", label: "X Formation" },
-    { id: "Heart", label: "❤️ Heart" },
-    { id: "Circle", label: "⭕ Circle" },
-    { id: "Wave", label: "〰️ Wave" },
-    { id: "LuminaX", label: "LuminaX" },
-  ];
+//   const toolDefs = [
+//     { id: "X", label: "X Formation" },
+//     { id: "Heart", label: "❤️ Heart" },
+//     { id: "Circle", label: "⭕ Circle" },
+//     { id: "Wave", label: "〰️ Wave" },
+//     { id: "LuminaX", label: "LuminaX" },
+//   ];
 
-  return (
-    <div
-      className="bg-gradient-to-r from-pink-500/10 via-purple-500/5 to-transparent p-5 border border-white/10 rounded-3xl max-w-5xl mx-auto"
-      style={{
-        background:
-          "radial-gradient(800px 500px at 50% -10%, rgba(255, 62, 165, 0.12), transparent 50%), #070716",
-      }}
-    >
-      <div className="flex flex-wrap gap-3 mb-5 justify-center">
-        {toolDefs.map((tool) => (
-          <button
-            key={tool.id}
-            className={`px-5 py-2.5 rounded-full bg-white/5 border border-white/10 cursor-pointer font-semibold text-white transition-all duration-300 hover:bg-white/10 hover:-translate-y-0.5 ${
-              currentShape === tool.id
-                ? "bg-gradient-to-r from-cyan-400 to-purple-500 border-transparent shadow-lg shadow-cyan-400/30"
-                : ""
-            }`}
-            onClick={() => setCurrentShape(tool.id)}
-          >
-            {tool.label}
-          </button>
-        ))}
-      </div>
+//   return (
+//     <div
+//       className="bg-gradient-to-r from-pink-500/10 via-purple-500/5 to-transparent p-5 border border-white/10 rounded-3xl max-w-5xl mx-auto"
+//       style={{
+//         background:
+//           "radial-gradient(800px 500px at 50% -10%, rgba(255, 62, 165, 0.12), transparent 50%), #070716",
+//       }}
+//     >
+//       <div className="flex flex-wrap gap-3 mb-5 justify-center">
+//         {toolDefs.map((tool) => (
+//           <button
+//             key={tool.id}
+//             className={`px-5 py-2.5 rounded-full bg-white/5 border border-white/10 cursor-pointer font-semibold text-white transition-all duration-300 hover:bg-white/10 hover:-translate-y-0.5 ${
+//               currentShape === tool.id
+//                 ? "bg-gradient-to-r from-cyan-400 to-purple-500 border-transparent shadow-lg shadow-cyan-400/30"
+//                 : ""
+//             }`}
+//             onClick={() => setCurrentShape(tool.id)}
+//           >
+//             {tool.label}
+//           </button>
+//         ))}
+//       </div>
 
-      <canvas
-        ref={canvasRef}
-        className="w-full h-96 block rounded-2xl border border-white/10"
-        style={{
-          background:
-            "radial-gradient(1200px 700px at 50% -300px, rgba(110, 193, 255, 0.08), transparent 60%), radial-gradient(500px 400px at 80% 120%, rgba(255, 62, 165, 0.08), transparent 70%), #050510",
-        }}
-        aria-label="Swarm Simulator"
-      />
+//       <canvas
+//         ref={canvasRef}
+//         className="w-full h-96 block rounded-2xl border border-white/10"
+//         style={{
+//           background:
+//             "radial-gradient(1200px 700px at 50% -300px, rgba(110, 193, 255, 0.08), transparent 60%), radial-gradient(500px 400px at 80% 120%, rgba(255, 62, 165, 0.08), transparent 70%), #050510",
+//         }}
+//         aria-label="Swarm Simulator"
+//       />
 
-      <div className="flex flex-col md:flex-row gap-8 mt-5 justify-center items-center">
-        <div className="text-center">
-          <label className="block text-sm text-blue-200 mb-2">
-            Drones: <span>{droneCount}</span>
-          </label>
-          <input
-            type="range"
-            min="60"
-            max="800"
-            value={droneCount}
-            onChange={(e) => setDroneCount(Number(e.target.value))}
-            className="w-44 h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer slider"
-          />
-        </div>
-        <div className="text-center">
-          <label className="block text-sm text-blue-200 mb-2">
-            Speed: <span>{speed.toFixed(1)}</span>
-          </label>
-          <input
-            type="range"
-            min="0.3"
-            max="2.2"
-            step="0.1"
-            value={speed}
-            onChange={(e) => setSpeed(Number(e.target.value))}
-            className="w-44 h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer slider"
-          />
-        </div>
-        <div className="flex gap-4">
-          <button
-            className="px-5 py-2.5 bg-gradient-to-r from-purple-600 to-cyan-500 text-white border-none rounded-full cursor-pointer font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple-600/30"
-            onClick={() => setPaused(!paused)}
-          >
-            {paused ? "Resume" : "Pause"}
-          </button>
-          <button
-            className="px-5 py-2.5 bg-gradient-to-r from-purple-600 to-cyan-500 text-white border-none rounded-full cursor-pointer font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple-600/30"
-            onClick={() =>
-              initDrones(
-                canvasRef.current?.clientWidth,
-                canvasRef.current?.clientHeight
-              )
-            }
-          >
-            Reset
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
+//       <div className="flex flex-col md:flex-row gap-8 mt-5 justify-center items-center">
+//         <div className="text-center">
+//           <label className="block text-sm text-blue-200 mb-2">
+//             Drones: <span>{droneCount}</span>
+//           </label>
+//           <input
+//             type="range"
+//             min="60"
+//             max="800"
+//             value={droneCount}
+//             onChange={(e) => setDroneCount(Number(e.target.value))}
+//             className="w-44 h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer slider"
+//           />
+//         </div>
+//         <div className="text-center">
+//           <label className="block text-sm text-blue-200 mb-2">
+//             Speed: <span>{speed.toFixed(1)}</span>
+//           </label>
+//           <input
+//             type="range"
+//             min="0.3"
+//             max="2.2"
+//             step="0.1"
+//             value={speed}
+//             onChange={(e) => setSpeed(Number(e.target.value))}
+//             className="w-44 h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer slider"
+//           />
+//         </div>
+//         <div className="flex gap-4">
+//           <button
+//             className="px-5 py-2.5 bg-gradient-to-r from-purple-600 to-cyan-500 text-white border-none rounded-full cursor-pointer font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple-600/30"
+//             onClick={() => setPaused(!paused)}
+//           >
+//             {paused ? "Resume" : "Pause"}
+//           </button>
+//           <button
+//             className="px-5 py-2.5 bg-gradient-to-r from-purple-600 to-cyan-500 text-white border-none rounded-full cursor-pointer font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple-600/30"
+//             onClick={() =>
+//               initDrones(
+//                 canvasRef.current?.clientWidth,
+//                 canvasRef.current?.clientHeight
+//               )
+//             }
+//           >
+//             Reset
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 // Custom Cursor Component
 const CustomCursor = () => {
@@ -652,83 +653,6 @@ const Index = () => {
   const scrollToSection = (sectionId) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
   };
-
-  const techCards = [
-    {
-      icon: "🧠",
-      title: "SwarmOS™",
-      description:
-        "Proprietary AI orchestration system that coordinates thousands of drones with millisecond precision, creating perfect formations every time.",
-    },
-    {
-      icon: "⚡",
-      title: "0.001s Response",
-      description:
-        "Real-time formation adjustments with near-instantaneous response times, ensuring flawless synchronization even in dynamic conditions.",
-    },
-    {
-      icon: "🛡️",
-      title: "SafetyNet Protocol",
-      description:
-        "Triple-redundant collision avoidance system with autonomous emergency protocols, making every show completely safe for audiences.",
-    },
-    {
-      icon: "💡",
-      title: "EcoGlow LEDs",
-      description:
-        "16.7 million colors with 50% less energy consumption. Our sustainable lighting technology creates brilliant displays while protecting our planet.",
-    },
-    {
-      icon: "🌤️",
-      title: "Weather Adaptive",
-      description:
-        "Advanced stabilization allows performances in winds up to 35 km/h, with real-time adjustments for optimal visibility in various conditions.",
-    },
-    {
-      icon: "📡",
-      title: "Neural Mesh Network",
-      description:
-        "Inter-drone communication creates a self-organizing network, enabling complex 3D formations and dynamic storytelling in the sky.",
-    },
-  ];
-
-  const applications = [
-    {
-      icon: "🏢",
-      title: "Corporate Events",
-      description:
-        "Transform product launches and company milestones into legendary moments. Create 3D logos, spell out messages, and leave lasting impressions on clients and employees.",
-      cta: "Book Corporate Show",
-    },
-    {
-      icon: "👑",
-      title: "Weddings",
-      description:
-        "Write your love story across the stars. From proposals to receptions, create magical moments with personalized aerial displays that guests will never forget.",
-      cta: "Plan Your Wedding",
-    },
-    {
-      icon: "🎆",
-      title: "National Celebrations",
-      description:
-        "Unite millions under one brilliant sky. Create patriotic displays, cultural symbols, and messages of unity that inspire entire nations.",
-      cta: "Government Enquiry",
-    },
-    {
-      icon: "🎵",
-      title: "Festivals & Concerts",
-      description:
-        "Amplify experiences beyond imagination. Synchronize drone displays with music, creating immersive performances that blur the line between technology and art.",
-      cta: "Create Festival Magic",
-    },
-  ];
-
-  const contactCards = [
-    { icon: "📧", label: "Email Us", value: "shows@luminax.aero" },
-    { icon: "📱", label: "Call Us", value: "+91-98765-DRONE" },
-    { icon: "📍", label: "Visit Us", value: "Mumbai, Delhi, Bangalore" },
-    { icon: "🌐", label: "Website", value: "luminax.aero" },
-  ];
 
   if (loading) {
     return (
@@ -806,7 +730,7 @@ const Index = () => {
             "radial-gradient(ellipse at center, #0A0E27 0%, #000000 100%)",
         }}
       >
-        <ParticlesCanvas />
+        {/* <ParticlesCanvas /> */}
         <div className="text-center z-20 relative">
           <h1 className="text-4xl md:text-6xl lg:text-8xl font-black mb-5 bg-gradient-to-r from-white to-cyan-400 bg-clip-text text-transparent leading-tight tracking-tight">
             Where Technology
@@ -845,7 +769,7 @@ const Index = () => {
         <p className="text-center text-xl text-white/70 mb-16 font-light">
           Interactive drone swarm simulator - see your formations come to life
         </p>
-        <SwarmSimulator />
+        {/* <SwarmSimulator /> */}
       </section>
 
       {/* About Section */}
@@ -932,9 +856,7 @@ const Index = () => {
 
       {/* Applications Section */}
       <section
-        className={`py-24 px-12 bg-gradient-to-b from-gray-900 to-black transition-all duration-1000 ${
-          appsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`py-24 px-12 bg-gradient-to-b from-gray-900 to-black transition-all duration-1000 `}
         id="applications"
         ref={appsRef}
       >
@@ -979,11 +901,7 @@ const Index = () => {
 
       {/* Contact Section */}
       <section
-        className={`py-24 px-12 bg-gray-900 text-center relative overflow-hidden transition-all duration-1000 ${
-          contactVisible
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-10"
-        }`}
+        className={`py-24 px-12 bg-gray-900 text-center relative overflow-hidden transition-all duration-1000 `}
         id="contact"
         ref={contactRef}
       >
