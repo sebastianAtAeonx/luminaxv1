@@ -5,26 +5,15 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
-import { applications, contactCards, techCards } from "./data";
+import {
+  applications,
+  contactCards,
+  NAVIGATION_ITEMS,
+  SOCIAL_LINKS,
+  techCards,
+} from "./data";
 import ParticlesCanvas from "./ParticlesCanvas.jsx";
 import { SwarmSimulator } from "./Simulator.jsx";
-
-// Constants
-const NAVIGATION_ITEMS = [
-  "Home",
-  "Simulator",
-  "About",
-  "Technology",
-  "Applications",
-  "Contact",
-];
-
-const SOCIAL_LINKS = [
-  { icon: "📷", href: "#", label: "Instagram" },
-  { icon: "🎬", href: "#", label: "YouTube" },
-  { icon: "🦅", href: "#", label: "Twitter" },
-  { icon: "💼", href: "#", label: "LinkedIn" },
-];
 
 // Custom Hooks
 const useIntersectionObserver = (options = {}) => {
@@ -555,13 +544,13 @@ const Index = () => {
         }}
       >
         <ParticlesCanvas />
-        <div className="text-center z-20 relative max-w-6xl mx-auto">
+        <div className="text-center z-20 relative max-w-7xl mx-auto">
           <h1 className="text-3xl px-2 py-3 sm:text-4xl md:text-6xl lg:text-8xl font-black mb-5 bg-gradient-to-r from-white to-cyan-400 bg-clip-text text-transparent leading-tight tracking-tight">
             Where Technology
             <br />
             Meets Artistry in the Sky
           </h1>
-          <p className="text-lg sm:text-xl md:text-2xl text-white/80 mb-10 font-light tracking-wide max-w-4xl mx-auto">
+          <p className="text-lg sm:text-xl md:text-2xl text-white/80 mb-10 font-medium tracking-wide max-w-4xl mx-auto md:whitespace-nowrap">
             Orchestrating 1000+ synchronized drones to paint your story across
             the cosmos
           </p>

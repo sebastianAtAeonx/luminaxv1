@@ -1,3 +1,20 @@
+// Constants
+export const NAVIGATION_ITEMS = [
+  "Home",
+  "Simulator",
+  "About",
+  "Technology",
+  "Applications",
+  "Contact",
+];
+
+export const SOCIAL_LINKS = [
+  { icon: "📷", href: "#", label: "Instagram" },
+  { icon: "🎬", href: "#", label: "YouTube" },
+  { icon: "🦅", href: "#", label: "Twitter" },
+  { icon: "💼", href: "#", label: "LinkedIn" },
+];
+
 export const techCards = [
   {
     icon: "🧠",
