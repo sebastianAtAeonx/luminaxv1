@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { applications, contactCards, techCards } from "./data";
-import ApplicationSection from "./ApplicationSection";
-import AutoScrollSection from "./AutoScrollSection";
 // Custom Hook for Intersection Observer
 const useIntersectionObserver = (options = {}) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -872,7 +870,7 @@ const Index = () => {
             {applications.map((app, index) => (
               <div
                 key={index}
-                className="min-w-80 h-96 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-3xl p-1 snap-center transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-600/40"
+                className="min-w-80 h-100 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-3xl p-1 snap-center transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-600/40"
               >
                 <div className="w-full h-full bg-black rounded-3xl p-10 flex flex-col justify-between">
                   <div>
