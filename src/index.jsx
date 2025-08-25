@@ -449,8 +449,8 @@ const ApplicationsCarousel = ({ applicationCardsMemoized }) => {
     speed: 600,
     slidesToShow: 3,
     slidesToScroll: 1,
-    centerMode: true,
-    centerPadding: "40px",
+    // centerMode: true,
+    // centerPadding: "40px",
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     appendDots: (dots) => (
