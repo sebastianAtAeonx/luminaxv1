@@ -647,7 +647,7 @@ const Index = () => {
         ref={appsRef}
       >
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl md:text-6xl mb-8 text-center bg-gradient-to-r from-purple-600 to-cyan-400 bg-clip-text text-transparent font-bold">
+          <h2 className="text-3xl pb-3 sm:text-4xl md:text-6xl mb-8 text-center bg-gradient-to-r from-purple-600 to-cyan-400 bg-clip-text text-transparent font-bold">
             Elevate Every Occasion
           </h2>
           <p className="text-center text-lg sm:text-xl text-white/70 mb-12 sm:mb-16 font-light">
