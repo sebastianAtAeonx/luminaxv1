@@ -19,35 +19,47 @@ export const SwarmSimulator = () => {
     () => ({
       X: (W, H) => {
         const pts = [];
-        const m = Math.min(W, H) * 0.35;
+        const m = Math.min(W, H) * 0.3;
         const cx = W * 0.5,
           cy = H * 0.5;
-        const step = 0.008;
+        const step = 0.02; // Increased step for better distribution
+
+        // First diagonal line (top-left to bottom-right)
         for (let t = -1; t <= 1; t += step) {
-          const offset = m * t;
-          pts.push({ x: cx + offset, y: cy + offset });
-          pts.push({ x: cx + offset, y: cy - offset });
+          pts.push({ x: cx + m * t, y: cy + m * t });
         }
-        return jitter(pts, 2);
+
+        // Second diagonal line (top-right to bottom-left)
+        for (let t = -1; t <= 1; t += step) {
+          pts.push({ x: cx + m * t, y: cy - m * t });
+        }
+
+        return jitter(pts, 3);
       },
       Heart: (W, H) => {
         const pts = [];
-        const s = Math.min(W, H) * 0.03;
+        const scale = Math.min(W, H) * 0.008; // Adjusted scale
         const cx = W * 0.5,
-          cy = H * 0.5 - 10;
-        const step = 0.08; // Reduced for better performance
+          cy = H * 0.5 + 20; // Centered better
+        const step = 0.05; // Better step size for cleaner heart
+
         for (let t = 0; t < Math.PI * 2; t += step) {
           const sinT = Math.sin(t);
           const cosT = Math.cos(t);
+          // Parametric heart equation
           const x = 16 * sinT * sinT * sinT;
           const y =
             13 * cosT -
             5 * Math.cos(2 * t) -
             2 * Math.cos(3 * t) -
             Math.cos(4 * t);
-          pts.push({ x: cx + x * s, y: cy - y * s });
+          pts.push({
+            x: cx + x * scale,
+            y: cy - y * scale, // Negative to flip vertically
+          });
         }
-        return jitter(densify(pts, 2), 1.5);
+
+        return jitter(densify(pts, 1.5), 2);
       },
       Circle: (W, H) => {
         const pts = [];
