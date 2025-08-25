@@ -14,7 +14,7 @@ import {
 } from "./data";
 import ParticlesCanvas from "./ParticlesCanvas.jsx";
 import { SwarmSimulator } from "./Simulator.jsx";
-
+import Slider from "react-slick";
 // Custom Hooks
 const useIntersectionObserver = (options = {}) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -442,27 +442,71 @@ const TechCard = React.memo(({ card, index }) => (
   </div>
 ));
 
-const ApplicationCard = React.memo(({ app, index }) => (
-  <div className="min-w-80 h-100 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-3xl p-1 snap-center transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-600/40">
-    <div className="w-full h-full bg-black rounded-3xl p-6 sm:p-8 lg:p-10 flex flex-col justify-between">
+const ApplicationsCarousel = ({ applicationCardsMemoized }) => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 600,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: "40px",
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    appendDots: (dots) => (
       <div>
-        <span className="text-5xl sm:text-6xl mb-5 block">{app.icon}</span>
-        <h3 className="text-2xl sm:text-3xl mb-4 bg-gradient-to-r from-purple-600 to-cyan-400 bg-clip-text text-transparent font-bold">
-          {app.title}
-        </h3>
-        <p className="text-white/80 leading-relaxed flex-grow text-sm sm:text-base">
-          {app.description}
-        </p>
+        <ul className="flex justify-center gap-2 mt-6">{dots}</ul>
       </div>
-      <button
-        className="mt-5 text-cyan-400 font-semibold inline-flex items-center gap-2 transition-all duration-300 hover:gap-4 group"
-        onClick={() => scrollToSection("contact")}
-      >
-        {app.cta}
-        <span className="transition-transform duration-300 group-hover:translate-x-1">
-          →
-        </span>
-      </button>
+    ),
+    customPaging: () => (
+      <div className="w-3 h-3 mt-3 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-full opacity-60 hover:opacity-100 transition-opacity"></div>
+    ),
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          centerPadding: "20px",
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+          centerPadding: "0px",
+        },
+      },
+    ],
+  };
+
+  return <Slider {...settings}>{applicationCardsMemoized}</Slider>;
+};
+
+const ApplicationCard = React.memo(({ app, index }) => (
+  <div className="px-3">
+    {" "}
+    {/* padding per slide */}
+    <div className="h-100 bg-gradient-to-r from-purple-600 to-cyan-500 rounded-3xl p-1 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-600/40">
+      <div className="h-full bg-black rounded-3xl p-6 sm:p-8 lg:p-10 flex flex-col justify-between">
+        <div>
+          <span className="text-5xl sm:text-6xl mb-5 block">{app.icon}</span>
+          <h3 className="text-2xl sm:text-3xl mb-4 bg-gradient-to-r from-purple-600 to-cyan-400 bg-clip-text text-transparent font-bold">
+            {app.title}
+          </h3>
+          <p className="text-white/80 leading-relaxed flex-grow text-sm sm:text-base">
+            {app.description}
+          </p>
+        </div>
+        <button
+          className="mt-5 text-cyan-400 font-semibold inline-flex items-center gap-2 transition-all duration-300 hover:gap-4 group"
+          onClick={() => scrollToSection("contact")}
+        >
+          {app.cta}
+          <span className="transition-transform duration-300 group-hover:translate-x-1">
+            →
+          </span>
+        </button>
+      </div>
     </div>
   </div>
 ));
@@ -478,6 +522,24 @@ const ContactCard = React.memo(({ card, index }) => (
     </p>
   </div>
 ));
+
+const NextArrow = ({ onClick }) => (
+  <button
+    onClick={onClick}
+    className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r from-purple-600 to-cyan-500 p-2 rounded-full shadow-md shadow-purple-600/30 hover:scale-110 transition-transform duration-300"
+  >
+    <span className="text-white text-sm">→</span>
+  </button>
+);
+
+const PrevArrow = ({ onClick }) => (
+  <button
+    onClick={onClick}
+    className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r from-purple-600 to-cyan-500 p-2 rounded-full shadow-md shadow-cyan-500/30 hover:scale-110 transition-transform duration-300"
+  >
+    <span className="text-white text-sm">←</span>
+  </button>
+);
 
 // Main Component
 const Index = () => {
@@ -513,7 +575,7 @@ const Index = () => {
       applications?.map((app, index) => (
         <ApplicationCard key={index} app={app} index={index} />
       )) || [],
-    []
+    [applications]
   );
 
   const contactCardsMemoized = useMemo(
@@ -523,7 +585,6 @@ const Index = () => {
       )) || [],
     []
   );
-
   if (loading) {
     return <LoadingScreen />;
   }
@@ -653,9 +714,11 @@ const Index = () => {
           <p className="text-center text-lg sm:text-xl text-white/70 mb-12 sm:mb-16 font-light">
             From intimate celebrations to grand spectacles
           </p>
-          <div className="flex gap-6 sm:gap-8 overflow-x-auto px-4 sm:px-12 lg:px-16 py-5 pb-5 scroll-smooth snap-x snap-mandatory">
-            {applicationCardsMemoized}
-          </div>
+
+          {/* ✅ Just render the carousel here, no extra flex/overflow wrapper */}
+          <ApplicationsCarousel
+            applicationCardsMemoized={applicationCardsMemoized}
+          />
         </div>
       </section>
 

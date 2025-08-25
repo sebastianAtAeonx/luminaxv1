@@ -39,3 +39,12 @@
   scrollbar-color: #7c3aed #000; /* Firefox support */
   scrollbar-width: thin;
 }
+
+/* .slick-slide {
+  overflow: visible !important;
+} */
+
+.slick-list {
+  /* overflow: visible !important; */
+  padding-block: 20px !important;
+}
