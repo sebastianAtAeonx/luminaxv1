@@ -609,7 +609,7 @@ const Index = () => {
       >
         <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-purple-600/10 rounded-full transform -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
         <div className="relative z-10 max-w-7xl mx-auto">
-          <h2 className="text-4xl md:text-6xl mb-8 bg-gradient-to-r from-purple-600 to-cyan-400 bg-clip-text text-transparent font-bold">
+          <h2 className="text-4xl py-5 md:text-6xl mb-8 bg-gradient-to-r from-purple-600 to-cyan-400 bg-clip-text text-transparent font-bold">
             Ready to Light Up Your Sky?
           </h2>
           <p className="text-xl text-white/70 mb-16 font-light">
