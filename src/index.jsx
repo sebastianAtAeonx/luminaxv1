@@ -569,7 +569,7 @@ const Index = () => {
           <p className="text-center text-xl text-white/70 mb-16 font-light">
             From intimate celebrations to grand spectacles
           </p>
-          <div className="flex gap-8 overflow-x-auto px-[50px] py-[20px] pb-5 scroll-smooth snap-x snap-mandatory">
+          <div className="flex gap-8 overflow-x-auto px-[50px] py-[20px] pb-5 scroll-smooth snap-x snap-mandatory scroll-container">
             {applications.map((app, index) => (
               <div
                 key={index}
