@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { applications, contactCards, techCards } from "./data";
-
+import ApplicationSection from "./ApplicationSection";
+import AutoScrollSection from "./AutoScrollSection";
 // Custom Hook for Intersection Observer
 const useIntersectionObserver = (options = {}) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -732,7 +733,7 @@ const Index = () => {
       >
         {/* <ParticlesCanvas /> */}
         <div className="text-center z-20 relative">
-          <h1 className="text-4xl md:text-6xl lg:text-8xl font-black mb-5 bg-gradient-to-r from-white to-cyan-400 bg-clip-text text-transparent leading-tight tracking-tight">
+          <h1 className="text-4xl md:text-6xl pb-10 lg:text-8xl font-black mb-5 bg-gradient-to-r from-white to-cyan-400 bg-clip-text text-transparent leading-tight tracking-tight">
             Where Technology
             <br />
             Meets Artistry in the Sky
@@ -774,7 +775,7 @@ const Index = () => {
 
       {/* About Section */}
       <section
-        className={`py-24 px-12 max-w-7xl mx-auto bg-gradient-to-b from-black to-gray-900 transition-all duration-1000 
+        className={`py-24 px-12  mx-auto bg-gradient-to-b from-black to-gray-900 transition-all duration-1000 
          
         `}
         id="about"
@@ -826,7 +827,7 @@ const Index = () => {
         ref={techRef}
       >
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl md:text-6xl mb-8 text-center bg-gradient-to-r from-purple-600 to-cyan-400 bg-clip-text text-transparent font-bold">
+          <h2 className="text-4xl leading-[2] md:text-6xl md:leading-[2] mb-8 text-center bg-gradient-to-r from-purple-600 to-cyan-400 bg-clip-text text-transparent font-bold">
             Precision. Intelligence. Synchronization.
           </h2>
           <p className="text-center text-xl text-white/70 mb-16 font-light">
@@ -867,7 +868,7 @@ const Index = () => {
           <p className="text-center text-xl text-white/70 mb-16 font-light">
             From intimate celebrations to grand spectacles
           </p>
-          <div className="flex gap-8 overflow-x-auto pb-5 scroll-smooth snap-x snap-mandatory">
+          <div className="flex gap-8 overflow-x-auto px-[50px] py-[20px] pb-5 scroll-smooth snap-x snap-mandatory">
             {applications.map((app, index) => (
               <div
                 key={index}
